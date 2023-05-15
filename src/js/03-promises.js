@@ -1,3 +1,5 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
 const form = document.querySelector('.form');
 const delayInput = form.querySelector('[name="delay"]');
 const stepInput = form.querySelector('[name="step"]');
@@ -22,19 +24,23 @@ function createPromises(delay, step, amount) {
     const promiseDelay = delay + step * i;
     createPromise(position, promiseDelay)
       .then(({ position, delay }) => {
-        console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
       .catch(({ position, delay }) => {
-        console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+        Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       });
   }
 }
 
 function handleSubmit(event) {
   event.preventDefault();
-  const delay = parseInt(delayInput.value);
-  const step = parseInt(stepInput.value);
-  const amount = parseInt(amountInput.value);
+  let delay = parseInt(delayInput.value);
+  let step = parseInt(stepInput.value);
+  let amount = parseInt(amountInput.value);
+  if ((delay < 0 || step < 0) || amount <= 0) {
+    Notify.warning('Please enter a positive value!');
+    return;
+  }
   createPromises(delay, step, amount);
 }
 
