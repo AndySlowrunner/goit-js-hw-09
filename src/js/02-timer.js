@@ -83,18 +83,17 @@ function updateFaceClock() {
   minutesLeft.textContent = addLeadingZero(minutes);
   secondsLeft.textContent = addLeadingZero(seconds);
 };
-function checkDeltaTime() {
-  let deltaTime = userDate - Date.now();
-  if (deltaTime < 1000) {
-    input.disabled = false;
-    clearInterval(timerId);
-  };
 
-}
-startBtn.addEventListener('click', () => {
+function startTimer() {
   timerId = setInterval(() => {
     updateFaceClock();
-    checkDeltaTime();
+    let deltaTime = userDate - Date.now();
+    if (deltaTime < 1000) {
+      input.disabled = false;
+      clearInterval(timerId);
+    }
   }, 1000);
   disableBtn();
-});
+}
+
+startBtn.addEventListener('click', startTimer);
