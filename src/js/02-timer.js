@@ -96,5 +96,5 @@ startBtn.addEventListener('click', () => {
     updateFaceClock();
     checkDeltaTime();
   }, 1000);
-  startBtn.disabled = true;
+  disableBtn();
 });
