@@ -85,6 +85,7 @@ function updateFaceClock() {
 };
 
 function startTimer() {
+  let timerId;
   timerId = setInterval(() => {
     updateFaceClock();
     let deltaTime = userDate - Date.now();
